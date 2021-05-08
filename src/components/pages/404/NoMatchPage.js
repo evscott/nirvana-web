@@ -1,28 +1,32 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import NavBar from "../reusable/NavBar";
+import NavBar from "../../reusable/NavBar";
 
 /**
  * The styles for the React component.
  */
 const useStyles = makeStyles(theme => {
     return {
-        mainTitle: {
-            fontFamily: "Montserrat-Black",
+        confusedShroomImg: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
     };
 });
 
 /**
- * This is the dashboard page.
+ * This is the about page.
  * */
-function DashboardPage(props) {
+function NoMatchPage() {
     const classes = useStyles();
-
     return (
         <div>
             <NavBar/>
+            <div className={classes.confusedShroomImg}>
+                <img src='/images/confused-mushroom-4-md.png' />
+            </div>
         </div>
     );
 }
@@ -35,4 +39,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(DashboardPage);
+export default connect(mapStateToProps)(NoMatchPage);
