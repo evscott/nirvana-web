@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Montserrat-Black';
+  src: local('Montserrat-Black'), url(./fonts/Montserrat/Montserrat-Black.ttf) format('truetype');
+}
