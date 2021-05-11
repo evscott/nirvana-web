@@ -8,6 +8,7 @@ import * as ROUTES from "./routes";
 import DashboardPage from "./components/pages/dashboard/DashboardPage";
 import AboutPage from "./components/pages/about/AboutPage";
 import NoMatchPage from "./components/pages/404/NoMatchPage";
+import ShroomsPage from "./components/pages/shrooms/ShroomsPage";
 
 const history = createBrowserHistory();
 
@@ -19,7 +20,7 @@ function App() {
           <Switch>
             <Route exact path={ROUTES.DASHBOARD_ROUTE} component={DashboardPage}/>
             <Route path={ROUTES.ABOUT_ROUTE} component={AboutPage}/>
-            <Route path={ROUTES.SHROOMS_ROUTE} component={AboutPage}/>
+            <Route path={ROUTES.SHROOMS_ROUTE} component={ShroomsPage}/>
             <Route path={ROUTES.LSD_ROUTE} component={AboutPage}/>
             <Route path={ROUTES.CONTACT_ROUTE} component={AboutPage}/>
             <Route>

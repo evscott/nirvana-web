@@ -3,14 +3,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import NavBar from "../../reusable/NavBar";
 import Grid from "@material-ui/core/Grid";
-import {Container, Typography} from "@material-ui/core";
-
+import {Container} from "@material-ui/core";
+import ProductCard from "../../reusable/ProductCard";
 
 /**
  * The styles for the React component.
  */
 const useStyles = makeStyles(theme => {
     return {
+        mainTitle: {
+            fontFamily: "Montserrat-Black",
+        },
         content: {
             marginTop: 75
         }
@@ -18,9 +21,9 @@ const useStyles = makeStyles(theme => {
 });
 
 /**
- * This is the about page.
+ * This is the shrooms marketplace page.
  * */
-function NoMatchPage() {
+function ShroomsPage() {
     const classes = useStyles();
     return (
         <div>
@@ -33,13 +36,7 @@ function NoMatchPage() {
                     spacing={3}
                 >
                     <Grid item>
-                        <img src='/images/confused-mushroom-4-md.png' />
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12}/>
-                    <Grid item>
-                        <Typography variant="h6" gutterBottom>
-                            The page you requested does not exist
-                        </Typography>
+                        <ProductCard/>
                     </Grid>
                 </Grid>
             </Container>
@@ -55,4 +52,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(NoMatchPage);
+export default connect(mapStateToProps)(ShroomsPage);

@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -17,12 +18,12 @@ const useStyles = makeStyles({
 
 export default function SeeMoreShroomsCard() {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
-                    square
                     component="img"
                     alt="Contemplative Reptile"
                     height="200"
@@ -33,7 +34,7 @@ export default function SeeMoreShroomsCard() {
                     <Typography gutterBottom variant="h6" component="h2">
                         Raw B.C. Mushrooms
                     </Typography>
-                    <Typography variant="body3" color="textSecondary" component="p">
+                    <Typography color="textSecondary" component="p">
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
                     </Typography>
                 </CardContent>
@@ -41,7 +42,7 @@ export default function SeeMoreShroomsCard() {
             <CardActions>
                 <Grid container spacing={3} direction={'row-reverse'}>
                     <Grid item>
-                        <Button size="medium" color="primary">
+                        <Button size="medium" color="primary" onClick={() => history.push('/shrooms')}>
                             See More
                         </Button>
                     </Grid>

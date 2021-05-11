@@ -22,7 +22,6 @@ export default function SeeMoreLSDCard() {
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
-                    square
                     component="img"
                     alt="Contemplative Reptile"
                     height="200"
@@ -33,8 +32,8 @@ export default function SeeMoreLSDCard() {
                     <Typography gutterBottom variant="h6" component="h2">
                         Acid Tabs
                     </Typography>
-                    <Typography variant="body3" color="textSecondary" component="p">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                    <Typography color="textSecondary" component="p">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt.
                     </Typography>
                 </CardContent>
             </CardActionArea>
