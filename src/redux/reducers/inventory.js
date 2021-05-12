@@ -8,6 +8,9 @@ const initialState = {
     products: {
         shrooms: {
             denominations: []
+        },
+        acid: {
+            denominations: []
         }
     }
 };

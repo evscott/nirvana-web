@@ -9,6 +9,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +30,7 @@ const REDIRECT = {
     HOME: '/',
     ABOUT: '/about',
     SHROOMS: '/shrooms',
-    LSD: '/lsd',
+    ACID: '/acid',
     CONTACT: '/contact'
 };
 
@@ -54,9 +56,9 @@ export default function NavBar() {
                     </IconButton>
                     <Menu id="simple-menu" anchorEl={menuState} keepMounted open={Boolean(menuState)} onClose={handleMenuClose}>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.HOME)} href={"/"}>Home</MenuItem>
+                        <MenuItem onClick={() => handleMenuClose(REDIRECT.SHROOMS)}>Shrooms</MenuItem>
+                        <MenuItem onClick={() => handleMenuClose(REDIRECT.ACID)}>Acid</MenuItem>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.ABOUT)} href={"/about"}>How It Works</MenuItem>
-                        <MenuItem onClick={() => handleMenuClose(REDIRECT.SHROOMS)}>Mushrooms</MenuItem>
-                        <MenuItem onClick={() => handleMenuClose(REDIRECT.LSD)}>LSD</MenuItem>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.CONTACT)}>Contact</MenuItem>
                     </Menu>
                     <Typography variant="h6" className={classes.title}>

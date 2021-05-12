@@ -2,10 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import NavBar from "../../reusable/NavBar";
-import SeeMoreShroomsCard from "./SeeMoreShroomsCard";
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
-import SeeMoreAcidCard from "./SeeMoreAcidCard";
+import ProductCard from "../../reusable/ProductCard";
 
 /**
  * The styles for the React component.
@@ -22,10 +21,11 @@ const useStyles = makeStyles(theme => {
 });
 
 /**
- * This is the dashboard page.
+ * This is the shrooms marketplace page.
  * */
-function DashboardPage() {
+function AcidPage(props) {
     const classes = useStyles();
+
     return (
         <div>
             <NavBar/>
@@ -37,10 +37,11 @@ function DashboardPage() {
                     spacing={3}
                 >
                     <Grid item>
-                        <SeeMoreShroomsCard/>
-                    </Grid>
-                    <Grid item>
-                        <SeeMoreAcidCard/>
+                        {props.denominations.length === 0 ? undefined :
+                            <ProductCard name={"Acid Tabs"}
+                                         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."}
+                                         denominations={props.denominations} />
+                        }
                     </Grid>
                 </Grid>
             </Container>
@@ -50,10 +51,10 @@ function DashboardPage() {
 
 // Gets props from the redux store
 const mapStateToProps = state => {
-    const products = state.inventory.products
+    const denominations = state.inventory.products.acid.denominations
     return {
-        products
+        denominations
     };
 };
 
-export default connect(mapStateToProps)(DashboardPage);
+export default connect(mapStateToProps)(AcidPage);

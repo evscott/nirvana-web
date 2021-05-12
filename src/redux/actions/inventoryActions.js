@@ -32,6 +32,25 @@ const getInventorySuccess = () => ({
                 }
             ],
         },
+        acid: {
+            denominations: [
+                {
+                    type: "3 tabs",
+                    price: 30.00,
+                    amount: 9
+                },
+                {
+                    type: "7 tabs",
+                    price: 60.00,
+                    amount: 6
+                },
+                {
+                    type: "sheet",
+                    price: 1000.00,
+                    amount: 2
+                }
+            ],
+        },
     }
 })
 

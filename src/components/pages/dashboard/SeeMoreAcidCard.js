@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -15,8 +16,9 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SeeMoreLSDCard() {
+export default function SeeMoreAcidCard() {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
         <Card className={classes.root}>
@@ -40,7 +42,7 @@ export default function SeeMoreLSDCard() {
             <CardActions>
                 <Grid container spacing={3} direction={'row-reverse'}>
                     <Grid item>
-                        <Button size="medium" color="primary">
+                        <Button size="medium" color="primary" onClick={() => history.push('/acid')}>
                             See More
                         </Button>
                     </Grid>
