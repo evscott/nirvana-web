@@ -23,8 +23,9 @@ const useStyles = makeStyles(theme => {
 /**
  * This is the shrooms marketplace page.
  * */
-function ShroomsPage() {
+function ShroomsPage(props) {
     const classes = useStyles();
+
     return (
         <div>
             <NavBar/>
@@ -36,7 +37,11 @@ function ShroomsPage() {
                     spacing={3}
                 >
                     <Grid item>
-                        <ProductCard/>
+                        {props.denominations.length === 0 ? undefined :
+                            <ProductCard name={"Raw B.C. Mushrooms"}
+                                         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."}
+                                         denominations={props.denominations} />
+                        }
                     </Grid>
                 </Grid>
             </Container>
@@ -46,9 +51,9 @@ function ShroomsPage() {
 
 // Gets props from the redux store
 const mapStateToProps = state => {
-    const products = state.inventory.products
+    const denominations = state.inventory.products.shrooms.denominations
     return {
-        products
+        denominations
     };
 };
 

@@ -12,22 +12,27 @@ const getInventoryFailure = () => ({
 
 const getInventorySuccess = () => ({
     type: GET_INVENTORY_SUCCESS,
-    products: [
-        {
-            id: "0",
-            name: "0",
-            description: "0",
-            quantity: "0",
-            price: "0"
+    products: {
+        shrooms: {
+            denominations: [
+                {
+                    type: "3.5 grams",
+                    price: 35.00,
+                    amount: 10
+                },
+                {
+                    type: "7 grams",
+                    price: 65.00,
+                    amount: 5
+                },
+                {
+                    type: "1 ounce",
+                    price: 200.00,
+                    amount: 9
+                }
+            ],
         },
-        {
-            id: "1",
-            name: "1",
-            description: "1",
-            quantity: "1",
-            price: "1"
-        }
-    ]
+    }
 })
 
 export const getInventory = () => (dispatch, getState) => {

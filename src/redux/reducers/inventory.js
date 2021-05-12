@@ -5,7 +5,11 @@ import {
 } from "../actions/inventoryActions";
 
 const initialState = {
-    products: []
+    products: {
+        shrooms: {
+            denominations: []
+        }
+    }
 };
 
 /**

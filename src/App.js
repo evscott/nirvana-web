@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, Router as Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import "./App.css";
 import CssBaseline from "@material-ui/core/CssBaseline";

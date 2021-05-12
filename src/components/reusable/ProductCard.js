@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,17 +23,35 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProductCard() {
+export default function ProductCard(props) {
     const classes = useStyles();
 
-    const [amount, setAmount] = React.useState(3.5);
-    const handleAmountChange = (event) => {
-        setAmount(event.target.value);
+    const [quantity, setQuantity] = React.useState(1);
+    const [cost, setCost] = React.useState(props.denominations[0].price);
+    const [denomination, setDenomination] = React.useState(props.denominations[0].type);
+
+    const getDenominationCost = (denomination) => {
+        for (let i = 0; i < props.denominations.length; i++)
+            if (props.denominations[i].type === denomination)
+                return props.denominations[i].price;
+    }
+    const getDenominationAmount = (denomination) => {
+        for (let i = 0; i < props.denominations.length; i++)
+            if (props.denominations[i].type === denomination)
+                return props.denominations[i].amount;
+    }
+
+    const handleQuantityChange = (quantityChange) => {
+        setQuantity(quantity+quantityChange);
+        // Cost must be recalculated upon quantity change
+        setCost((cost+quantityChange*getDenominationCost(denomination)))
     };
 
-    const [quantity, setQuantity] = React.useState(1);
-    const handleQuantityChange = (event) => {
-        setQuantity(quantity+event);
+    const handleDenominationChange = (event) => {
+        setDenomination(event.target.value);
+        // Quantity and cost must be reset upon denomination change
+        setQuantity(1);
+        setCost(getDenominationCost(event.target.value))
     };
 
     return (
@@ -47,10 +66,10 @@ export default function ProductCard() {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                        Raw B.C. Mushrooms
+                        {props.name}
                     </Typography>
                     <Typography color="textSecondary" component="p">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                        {props.description}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -61,25 +80,19 @@ export default function ProductCard() {
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
-                                value={amount}
-                                onChange={handleAmountChange}
+                                value={denomination}
+                                onChange={handleDenominationChange}
                                 className={classes.input}
                             >
-                                <MenuItem value={3.5}>
-                                    <Typography variant="body2" color={'textPrimary'}>
-                                        3.5 grams
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem value={7}>
-                                    <Typography variant="body2" color={'textPrimary'}>
-                                        7 grams
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem value={1}>
-                                    <Typography variant="body2" color={'textPrimary'}>
-                                        1 ounce
-                                    </Typography>
-                                </MenuItem>
+                                {
+                                    props.denominations.map(d => (
+                                        <MenuItem value={d.type} key={d.type}>
+                                            <Typography variant="body2" color={'textPrimary'}>
+                                                {d.type}
+                                            </Typography>
+                                        </MenuItem>
+                                    ))
+                                }
                             </Select>
                         </FormControl>
                     </Grid>
@@ -90,20 +103,41 @@ export default function ProductCard() {
                     </Grid>
                     <Grid item>
                         <ButtonGroup disableElevation variant="outlined">
-                            <Button onClick={() => handleQuantityChange(-1)} className={classes.input}>-</Button>
-                            <Button disabled style={{maxWidth: 40, minWidth: 40}} className={classes.input}>
+                            <Button
+                                onClick={() => handleQuantityChange(-1)}
+                                className={classes.input}
+                                disabled={quantity === 1}
+                            >
+                                -
+                            </Button>
+                            <Button disabled
+                                    style={{maxWidth: 40, minWidth: 40}}
+                                    className={classes.input}>
                                 <Typography variant="body2" color={'textPrimary'}>
                                     {quantity}
                                 </Typography>
                             </Button>
-                            <Button onClick={() => handleQuantityChange(1)} className={classes.input}>+</Button>
+                            <Button
+                                onClick={() => handleQuantityChange(1)}
+                                className={classes.input}
+                                disabled={getDenominationAmount(denomination) === quantity}
+                            >
+                                +
+                            </Button>
                         </ButtonGroup>
                     </Grid>
-                    <Grid item container md={12} lg={12} spacing={1} direction="column" alignItems={'flex-end'}>
-                        <Grid item md={12} lg={12}>
-                            <Typography variant="body1" color={'textPrimary'} align={'right'}>
-                                $25.00
-                            </Typography>
+                    <Grid item container md={12} lg={12} spacing={1} direction={"column"} alignItems={'flex-end'}>
+                        <Grid item container spacing={1} direction={'row'} justify={'flex-end'} alignItems={"center"}>
+                            <Grid item>
+                                <Typography variant="subtitle1" color={'textSecondary'} align={'right'} hidden={quantity === 1}>
+                                    ${getDenominationCost(denomination).toFixed(2)}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="h6" color={'textPrimary'} align={'right'}>
+                                    ${cost.toFixed(2)}
+                                </Typography>
+                            </Grid>
                         </Grid>
                         <Grid>
                             <Button disableElevation variant={'contained'} color={'primary'} style={{minWidth: 170, marginBottom: 5}}>
@@ -116,3 +150,9 @@ export default function ProductCard() {
         </Card>
     );
 }
+
+ProductCard.propTypes = {
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    denominations: PropTypes.array.isRequired,
+};
