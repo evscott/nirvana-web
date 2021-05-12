@@ -9,8 +9,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
+import ShoppingCart from "./ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,9 +63,7 @@ export default function NavBar() {
                     <Typography variant="h6" className={classes.title}>
                         Nirvana
                     </Typography>
-                    <IconButton edge="start" className={classes.cartButton} color="inherit" aria-label="cart">
-                        <ShoppingCartIcon/>
-                    </IconButton>
+                    <ShoppingCart/>
                 </Toolbar>
             </AppBar>
         </div>
