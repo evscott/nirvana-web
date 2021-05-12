@@ -10,4 +10,4 @@ function Startup(props) {
     return props.children;
 }
 
-export default connect(null, { getInventory})(Startup);
+export default connect(null, {getInventory})(Startup);

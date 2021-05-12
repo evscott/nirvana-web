@@ -5,12 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ShoppingCart from "./ShoppingCart";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-        textAlign: 'center',
+        textAlign: 'center'
     },
 }));
 
@@ -47,6 +48,10 @@ export default function NavBar() {
         if (redirect) history.push(redirect)
     };
 
+    const handleClick = () => {
+
+    }
+
     return (
         <div className={classes.root}>
             <AppBar position="static" color={'transparent'}>
@@ -64,9 +69,7 @@ export default function NavBar() {
                     <Typography variant="h6" className={classes.title}>
                         Nirvana
                     </Typography>
-                    <IconButton edge="start" className={classes.cartButton} color="inherit" aria-label="cart">
-                        <ShoppingCartIcon/>
-                    </IconButton>
+                    <ShoppingCart/>
                 </Toolbar>
             </AppBar>
         </div>

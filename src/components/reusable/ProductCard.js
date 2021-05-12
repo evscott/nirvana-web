@@ -13,6 +13,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import PropTypes from 'prop-types';
+import {addToShoppingCart} from "../../redux/actions/shoppingCartActions"
+import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,19 +25,19 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProductCard(props) {
+function ProductCard(props) {
     const classes = useStyles();
 
     const [quantity, setQuantity] = React.useState(1);
     const [cost, setCost] = React.useState(props.denominations[0].price);
     const [denomination, setDenomination] = React.useState(props.denominations[0].type);
 
-    const getDenominationCost = (denomination) => {
+    const getDenominationCost = () => {
         for (let i = 0; i < props.denominations.length; i++)
             if (props.denominations[i].type === denomination)
                 return props.denominations[i].price;
     }
-    const getDenominationAmount = (denomination) => {
+    const getDenominationAmount = () => {
         for (let i = 0; i < props.denominations.length; i++)
             if (props.denominations[i].type === denomination)
                 return props.denominations[i].amount;
@@ -53,6 +55,14 @@ export default function ProductCard(props) {
         setQuantity(1);
         setCost(getDenominationCost(event.target.value))
     };
+
+    const addToShoppingCartInRedux = () => {
+        let itemsToAdd = [];
+        for (let i = 0; i < quantity; i++) {
+            itemsToAdd.push({name: props.name, denomination: denomination, cost: getDenominationCost()});
+        }
+        props.addToShoppingCart(itemsToAdd);
+    }
 
     return (
         <Card className={classes.root}>
@@ -120,27 +130,34 @@ export default function ProductCard(props) {
                             <Button
                                 onClick={() => handleQuantityChange(1)}
                                 className={classes.input}
-                                disabled={getDenominationAmount(denomination) === quantity}
+                                disabled={getDenominationAmount() === quantity}
                             >
                                 +
                             </Button>
                         </ButtonGroup>
                     </Grid>
+                    <Grid item xs={12} md={12} lg={12}/>
                     <Grid item container md={12} lg={12} spacing={1} direction={"column"} alignItems={'flex-end'}>
                         <Grid item container spacing={1} direction={'row'} justify={'flex-end'} alignItems={"center"}>
                             <Grid item>
                                 <Typography variant="subtitle1" color={'textSecondary'} align={'right'} hidden={quantity === 1}>
-                                    ${getDenominationCost(denomination).toFixed(2)}
+                                    ${getDenominationCost().toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <Typography variant="h6" color={'textPrimary'} align={'right'}>
-                                    ${cost.toFixed(2)}
+                                    ${cost.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Grid>
-                            <Button disableElevation variant={'contained'} color={'primary'} style={{minWidth: 170, marginBottom: 5}}>
+                            <Button
+                                disableElevation
+                                variant={'contained'}
+                                color={'primary'}
+                                style={{minWidth: 170, marginBottom: 5}}
+                                onClick={addToShoppingCartInRedux}
+                            >
                                 Add to cart
                             </Button>
                         </Grid>
@@ -156,3 +173,5 @@ ProductCard.propTypes = {
     description: PropTypes.string.isRequired,
     denominations: PropTypes.array.isRequired,
 };
+
+export default connect(null, {addToShoppingCart})(ProductCard);
