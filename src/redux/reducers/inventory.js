@@ -35,7 +35,7 @@ export default function inventory(state = initialState, action) {
         case GET_INVENTORY_SUCCESS:
             return {
                 ...state,
-                products: action.products
+                products: action.products,
             };
         default:
             return state;

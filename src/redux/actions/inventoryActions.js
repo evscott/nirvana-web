@@ -10,7 +10,7 @@ const getInventoryFailure = () => ({
     type: GET_INVENTORY_FAILURE
 })
 
-const getInventorySuccess = () => ({
+export const getInventorySuccess = () => ({
     type: GET_INVENTORY_SUCCESS,
     products: {
         shrooms: {

@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => {
  * */
 function DashboardPage() {
     const classes = useStyles();
+
     return (
         <div>
             <NavBar/>
@@ -49,7 +50,7 @@ function DashboardPage() {
 }
 
 // Gets props from the redux store
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     const products = state.inventory.products
     return {
         products
