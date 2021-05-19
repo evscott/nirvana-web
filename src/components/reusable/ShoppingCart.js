@@ -2,19 +2,12 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import {connect} from "react-redux";
 import {getSummaryData} from "../../redux/helpers/shoppingCart";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
     list: {
@@ -34,8 +27,7 @@ const StyledBadge = withStyles((theme) => ({
 function ShoppingCart(props) {
     const classes = useStyles();
     const [state, setState] = React.useState(false);
-
-    console.log(getSummaryData(props.items))
+    const shoppingCartSummaryData = getSummaryData(props.items);
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -44,28 +36,26 @@ function ShoppingCart(props) {
         setState(open);
     };
 
-    const list = () => (
-        <div
-            className={clsx(classes.list)}
-            role="presentation"
-        >
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
+    const itemCard = () => (
+      <div>
+
+      </div>
+    );
+
+    const itemsList = () => (
+        <div className={clsx(classes.list)} role="presentation">
+            <Grid container direction={"column"} justify={"center"} alignItems={"center"}>
+                {shoppingCartSummaryData.collapsedItems.map((item, index) => (
+                    <Grid item key={index}>
+                        {/*Add the card here*/}
+                        {item.name},
+                        {item.denomination},
+                        {item.quantity},
+                        {item.cost},
+                        {item.subtotal}
+                    </Grid>
                 ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
+            </Grid>
         </div>
     );
 
@@ -83,7 +73,7 @@ function ShoppingCart(props) {
                 </StyledBadge>
             </IconButton>
             <Drawer anchor={'right'} open={state} onClose={toggleDrawer(false)}>
-                {list()}
+                {itemsList()}
             </Drawer>
         </React.Fragment>
     );
