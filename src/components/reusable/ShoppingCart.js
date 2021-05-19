@@ -13,6 +13,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
+import {connect} from "react-redux";
+import {getSummaryData} from "../../redux/helpers/shoppingCart";
 
 const useStyles = makeStyles({
     list: {
@@ -29,9 +31,11 @@ const StyledBadge = withStyles((theme) => ({
     },
 }))(Badge);
 
-export default function ShoppingCart() {
+function ShoppingCart(props) {
     const classes = useStyles();
     const [state, setState] = React.useState(false);
+
+    console.log(getSummaryData(props.items))
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -79,8 +83,18 @@ export default function ShoppingCart() {
                 </StyledBadge>
             </IconButton>
             <Drawer anchor={'right'} open={state} onClose={toggleDrawer(false)}>
-                {list('right')}
+                {list()}
             </Drawer>
         </React.Fragment>
     );
 }
+
+// Gets props from the redux store
+const mapStateToProps = (state) => {
+    const items = state.shoppingCart.items
+    return {
+        items
+    };
+};
+
+export default connect(mapStateToProps)(ShoppingCart);
