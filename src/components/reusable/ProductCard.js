@@ -140,12 +140,12 @@ function ProductCard(props) {
                         <Grid item container spacing={1} direction={'row'} justify={'flex-end'} alignItems={"center"}>
                             <Grid item>
                                 <Typography variant="subtitle1" color={'textSecondary'} align={'right'} hidden={quantity === 1}>
-                                    ${getDenominationCost().toFixed(2)}
+                                    ${getDenominationCost().toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <Typography variant="h6" color={'textPrimary'} align={'right'}>
-                                    ${cost.toFixed(2)}
+                                    ${cost.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </Typography>
                             </Grid>
                         </Grid>
