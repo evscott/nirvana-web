@@ -32,9 +32,9 @@ function ProductCard(props) {
     const [cost, setCost] = React.useState(props.denominations[0].price);
     const [denomination, setDenomination] = React.useState(props.denominations[0].type);
 
-    const getDenominationCost = () => {
+    const getDenominationCost = (value) => {
         for (let i = 0; i < props.denominations.length; i++)
-            if (props.denominations[i].type === denomination)
+            if (props.denominations[i].type === value)
                 return props.denominations[i].price;
     }
     const getDenominationAmount = () => {
@@ -59,7 +59,7 @@ function ProductCard(props) {
     const addToShoppingCartInRedux = () => {
         let itemsToAdd = [];
         for (let i = 0; i < quantity; i++) {
-            itemsToAdd.push({name: props.name, denomination: denomination, cost: getDenominationCost()});
+            itemsToAdd.push({name: props.name, denomination: denomination, cost: getDenominationCost(denomination)});
         }
         props.addToShoppingCart(itemsToAdd);
     }
@@ -141,7 +141,7 @@ function ProductCard(props) {
                         <Grid item container spacing={1} direction={'row'} justify={'flex-end'} alignItems={"center"}>
                             <Grid item>
                                 <Typography variant="subtitle1" color={'textSecondary'} align={'right'} hidden={quantity === 1}>
-                                    ${getDenominationCost().toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    ${getDenominationCost(denomination).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </Typography>
                             </Grid>
                             <Grid item>

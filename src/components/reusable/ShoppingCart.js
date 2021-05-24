@@ -146,8 +146,8 @@ function ShoppingCart(props) {
                 <CardActions className={classes.actions}>
                     <Grid container alignItems={"center"} justify="space-between">
                         <Grid item>
-                            <ButtonGroup disableElevation variant="outlined">
-                                <Button size={'small'} onClick={() => props.reduce(item)}>
+                            <ButtonGroup disableElevation variant="outlined" size={'small'}>
+                                <Button onClick={() => props.reduce(item)}>
                                     -
                                 </Button>
                                 <Button disabled style={{maxWidth: 40, minWidth: 40}}>
@@ -199,7 +199,7 @@ function ShoppingCart(props) {
                     </Grid>
                 </Grid>
                 <Grid item>
-                    <Button variant={'contained'} color={'primary'} size={'large'} className={classes.checkout}>
+                    <Button variant={'contained'} color={'primary'} size={'large'} className={classes.checkout} onClick={() => history.push('/cart')}>
                         Go to checkout
                     </Button>
                 </Grid>

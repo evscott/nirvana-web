@@ -10,6 +10,7 @@ import DashboardPage from "./components/pages/dashboard/DashboardPage";
 import AboutPage from "./components/pages/about/AboutPage";
 import ShroomsPage from "./components/pages/shrooms/ShroomsPage";
 import AcidPage from "./components/pages/acid/AcidPage";
+import ShoppingCartPage from "./components/pages/checkout/ShoppingCartPage";
 
 
 const history = createBrowserHistory();
@@ -24,6 +25,7 @@ function App() {
             <Route path={ROUTES.ABOUT_ROUTE} component={AboutPage}/>
             <Route path={ROUTES.SHROOMS_ROUTE} component={ShroomsPage}/>
             <Route path={ROUTES.ACID_ROUTE} component={AcidPage}/>
+            <Route path={ROUTES.SHOPPING_CART_PAGE} component={ShoppingCartPage}/>
             <Route path={ROUTES.CONTACT_ROUTE} component={AboutPage}/>
             <Route>
                 <NoMatchPage/>
