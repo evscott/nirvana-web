@@ -15,10 +15,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PropTypes from 'prop-types';
 import {addToShoppingCart} from "../../redux/actions/shoppingCartActions"
 import {connect} from "react-redux";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 350,
+        maxWidth: 345,
     },
     input: {
         height: 38,
@@ -31,6 +33,7 @@ function ProductCard(props) {
     const [quantity, setQuantity] = React.useState(1);
     const [cost, setCost] = React.useState(props.denominations[0].price);
     const [denomination, setDenomination] = React.useState(props.denominations[0].type);
+    const [visible, setVisible] = React.useState(false);
 
     const getDenominationCost = (value) => {
         for (let i = 0; i < props.denominations.length; i++)
@@ -62,6 +65,7 @@ function ProductCard(props) {
             itemsToAdd.push({name: props.name, denomination: denomination, cost: getDenominationCost(denomination)});
         }
         props.addToShoppingCart(itemsToAdd);
+        setVisible(true)
     }
 
     return (
@@ -70,19 +74,19 @@ function ProductCard(props) {
                 <CardMedia
                     component="img"
                     alt="Contemplative Reptile"
-                    height="200"
+                    height="250"
                     image="/images/confused-mushroom-4-md.png"
                     title="Contemplative Reptile"
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h6" component="h2">
-                        {props.name}
-                    </Typography>
-                    <Typography color="textSecondary" component="p">
-                        {props.description}
-                    </Typography>
-                </CardContent>
             </CardActionArea>
+            <CardContent>
+                <Typography gutterBottom variant="h6" component="h2">
+                    {props.name}
+                </Typography>
+                <Typography color="textSecondary" component="p">
+                    {props.description}
+                </Typography>
+            </CardContent>
             <CardActions>
                 <Grid container alignItems={"center"} spacing={1} justify={'space-between'}>
                     <Grid item>
@@ -150,20 +154,26 @@ function ProductCard(props) {
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Grid>
+                        <Grid item>
                             <Button
                                 disableElevation
                                 variant={'contained'}
                                 color={'primary'}
                                 style={{minWidth: 170, marginBottom: 5}}
                                 onClick={addToShoppingCartInRedux}
+                                disabled={props.soldOut}
                             >
-                                Add to cart
+                                {props.soldOut ? 'Sold out' : 'Add to cart'}
                             </Button>
                         </Grid>
                     </Grid>
                 </Grid>
             </CardActions>
+            <Snackbar open={visible} autoHideDuration={2000} onClose={() => setVisible(false)}>
+                <MuiAlert severity="success" onClose={() => setVisible(false)}>
+                    Added to cart!
+                </MuiAlert>
+            </Snackbar>
         </Card>
     );
 }
@@ -172,6 +182,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     denominations: PropTypes.array.isRequired,
+    soldOut: PropTypes.bool.isRequired,
 };
 
 export default connect(null, {addToShoppingCart})(ProductCard);

@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => {
             fontFamily: "Montserrat-Black",
         },
         content: {
-            marginTop: 75
+            marginTop: 50,
         }
     };
 });
@@ -40,7 +40,9 @@ function ShroomsPage(props) {
                         {props.denominations.length === 0 ? undefined :
                             <ProductCard name={"Raw B.C. Mushrooms"}
                                          description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."}
-                                         denominations={props.denominations} />
+                                         denominations={props.denominations}
+                                         soldOut={false}
+                            />
                         }
                     </Grid>
                 </Grid>

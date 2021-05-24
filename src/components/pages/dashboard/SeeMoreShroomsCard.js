@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles({
     root: {
@@ -21,33 +23,35 @@ export default function SeeMoreShroomsCard() {
     const history = useHistory();
 
     return (
-        <Card className={classes.root}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="200"
-                    image="/images/confused-mushroom-4-md.png"
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h6" component="h2">
-                        Raw B.C. Mushrooms
-                    </Typography>
-                    <Typography color="textSecondary" component="p">
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Grid container spacing={3} direction={'row-reverse'}>
-                    <Grid item>
-                        <Button size="medium" color="primary" onClick={() => history.push('/shrooms')}>
-                            See More
-                        </Button>
-                    </Grid>
-                </Grid>
-            </CardActions>
-        </Card>
+        <Link underline='none' component={RouterLink} to={"/shrooms"}>
+            <Card className={classes.root}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        alt="Contemplative Reptile"
+                        height="200"
+                        image="/images/confused-mushroom-4-md.png"
+                        title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h6" component="h2">
+                            Raw B.C. Mushrooms
+                        </Typography>
+                        <Typography color="textSecondary" component="p">
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Grid container spacing={3} direction={'row-reverse'}>
+                            <Grid item>
+                                <Button size="medium" color="primary" onClick={() => history.push('/shrooms')}>
+                                    See More
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </CardActions>
+                </CardActionArea>
+            </Card>
+        </Link>
     );
 }

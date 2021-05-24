@@ -9,9 +9,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ShoppingCart from "./ShoppingCart";
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
-import Grid from "@material-ui/core/Grid";
+import TableCell from "@material-ui/core/TableCell";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,11 +63,13 @@ export default function NavBar() {
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.HOME)} href={"/"}>Home</MenuItem>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.SHROOMS)}>Shrooms</MenuItem>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.ACID)}>Acid</MenuItem>
-                        <MenuItem onClick={() => handleMenuClose(REDIRECT.ABOUT)} href={"/about"}>How It Works</MenuItem>
+                        <MenuItem onClick={() => handleMenuClose(REDIRECT.ABOUT)} href={"/about"}>FAQ</MenuItem>
                         <MenuItem onClick={() => handleMenuClose(REDIRECT.CONTACT)}>Contact</MenuItem>
                     </Menu>
-                    <Typography variant="h6" className={classes.title}>
-                        Nirvana
+                    <Typography variant="h6" className={classes.title} color={"textPrimary"}>
+                        <Link underline='none' component={RouterLink} to={"/"} color={"textPrimary"}>
+                            Nirvana
+                        </Link>
                     </Typography>
                     <ShoppingCart/>
                 </Toolbar>

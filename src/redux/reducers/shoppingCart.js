@@ -1,4 +1,4 @@
-import {UPDATE_SHOPPING_CART} from "../actions/shoppingCartActions";
+import {EMPTY_SHOPPING_CART, UPDATE_SHOPPING_CART} from "../actions/shoppingCartActions";
 
 const initialState = {
     items: []
@@ -17,6 +17,11 @@ export default function shoppingCart(state = initialState, action) {
                 ...state,
                 items: action.items,
             };
+        case EMPTY_SHOPPING_CART:
+            return {
+                ...state,
+                items: action.items,
+            }
         default:
             return state;
     }
