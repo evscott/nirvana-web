@@ -15,6 +15,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import PropTypes from 'prop-types';
 import {addToShoppingCart} from "../../redux/actions/shoppingCartActions"
 import {connect} from "react-redux";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +33,7 @@ function ProductCard(props) {
     const [quantity, setQuantity] = React.useState(1);
     const [cost, setCost] = React.useState(props.denominations[0].price);
     const [denomination, setDenomination] = React.useState(props.denominations[0].type);
+    const [visible, setVisible] = React.useState(false);
 
     const getDenominationCost = (value) => {
         for (let i = 0; i < props.denominations.length; i++)
@@ -62,6 +65,7 @@ function ProductCard(props) {
             itemsToAdd.push({name: props.name, denomination: denomination, cost: getDenominationCost(denomination)});
         }
         props.addToShoppingCart(itemsToAdd);
+        setVisible(true)
     }
 
     return (
@@ -164,6 +168,11 @@ function ProductCard(props) {
                     </Grid>
                 </Grid>
             </CardActions>
+            <Snackbar open={visible} autoHideDuration={2000} onClose={() => setVisible(false)}>
+                <MuiAlert severity="success" onClose={() => setVisible(false)}>
+                    Added to cart!
+                </MuiAlert>
+            </Snackbar>
         </Card>
     );
 }
