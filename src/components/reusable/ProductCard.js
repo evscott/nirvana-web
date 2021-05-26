@@ -20,7 +20,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 350,
+        maxWidth: 345,
     },
     input: {
         height: 38,
@@ -74,19 +74,19 @@ function ProductCard(props) {
                 <CardMedia
                     component="img"
                     alt="Contemplative Reptile"
-                    height="200"
+                    height="250"
                     image="/images/confused-mushroom-4-md.png"
                     title="Contemplative Reptile"
                 />
-                <CardContent>
-                    <Typography gutterBottom variant="h6" component="h2">
-                        {props.name}
-                    </Typography>
-                    <Typography color="textSecondary" component="p">
-                        {props.description}
-                    </Typography>
-                </CardContent>
             </CardActionArea>
+            <CardContent>
+                <Typography gutterBottom variant="h6" component="h2">
+                    {props.name}
+                </Typography>
+                <Typography color="textSecondary" component="p">
+                    {props.description}
+                </Typography>
+            </CardContent>
             <CardActions>
                 <Grid container alignItems={"center"} spacing={1} justify={'space-between'}>
                     <Grid item>
@@ -154,15 +154,16 @@ function ProductCard(props) {
                                 </Typography>
                             </Grid>
                         </Grid>
-                        <Grid>
+                        <Grid item>
                             <Button
                                 disableElevation
                                 variant={'contained'}
                                 color={'primary'}
                                 style={{minWidth: 170, marginBottom: 5}}
                                 onClick={addToShoppingCartInRedux}
+                                disabled={props.soldOut}
                             >
-                                Add to cart
+                                {props.soldOut ? 'Sold out' : 'Add to cart'}
                             </Button>
                         </Grid>
                     </Grid>
@@ -181,6 +182,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     denominations: PropTypes.array.isRequired,
+    soldOut: PropTypes.bool.isRequired,
 };
 
 export default connect(null, {addToShoppingCart})(ProductCard);

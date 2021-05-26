@@ -26,14 +26,16 @@ import {
     reduceFromShoppingCart,
     addToShoppingCart
 } from "../../redux/actions/shoppingCartActions";
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
     list: {
         width: 400,
-        height: 'calc(100% - 200px)',
+        height: 'calc(100% - 235px)',
         overflowY: 'scroll',
         overflowX: 'hidden',
-        marginTop: 10,
+        marginTop: 20,
     },
     // Card styles
     root: {
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     cover: {
         width: 100,
         height: 80,
-        marginTop: 40,
+        marginTop: 30,
     },
     controls: {
         display: 'flex',
@@ -91,6 +93,10 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         width: 400,
+    },
+    summaryDataText: {
+        marginLeft: 15,
+        marginRight: 15,
     }
 }));
 
@@ -119,85 +125,111 @@ function ShoppingCart(props) {
     };
 
     const itemCard = (item) => (
-        <Card className={classes.root} elevation={1}>
-            <IconButton size={'small'} className={classes.cancel} onClick={() => props.remove(item)}>
-                <CancelIcon/>
-            </IconButton>
-            <CardMedia
-                className={classes.cover}
-                image="/images/confused-mushroom-4-md.png"
-                title="Live from space album cover"
-            />
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Grid container direction={'column'}>
-                        <Grid item>
-                            <Typography variant={"subtitle1"}>
-                                {item.name}
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant={'body2'} color={'textSecondary'}>
-                                {item.denomination}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </CardContent>
-                <CardActions className={classes.actions}>
-                    <Grid container alignItems={"center"} justify="space-between">
-                        <Grid item>
-                            <ButtonGroup disableElevation variant="outlined" size={'small'}>
-                                <Button onClick={() => props.reduce(item)}>
-                                    -
-                                </Button>
-                                <Button disabled style={{maxWidth: 40, minWidth: 40}}>
-                                    <Typography variant="body2" color={'textPrimary'}>
-                                        {item.quantity}
+        <div>
+            <Card className={classes.root} elevation={1}>
+                <IconButton size={'small'} className={classes.cancel} onClick={() => props.remove(item)}>
+                    <CancelIcon/>
+                </IconButton>
+                <Link underline='none' component={RouterLink} to={item.name === "Raw B.C. Mushrooms" ? "/shrooms" : "acid"}>
+                <CardMedia
+                    className={classes.cover}
+                    image="/images/confused-mushroom-4-md.png"
+                    title="Live from space album cover"
+                />
+                </Link>
+                <div className={classes.details}>
+                    <Link underline='none' component={RouterLink} to={item.name === "Raw B.C. Mushrooms" ? "/shrooms" : "acid"} color={'textPrimary'}>
+                        <CardContent className={classes.content}>
+                            <Grid container direction={'column'}>
+                                <Grid item>
+                                    <Typography variant={"subtitle1"}>
+                                        {item.name}
                                     </Typography>
-                                </Button>
-                                <Button onClick={() => props.add(item)}>
-                                    +
-                                </Button>
-                            </ButtonGroup>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant={'body2'} color={'textSecondary'}>
+                                        {item.denomination}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Link>
+                    <CardActions className={classes.actions}>
+                        <Grid container alignItems={"center"} justify="space-between">
+                            <Grid item>
+                                <ButtonGroup disableElevation variant="outlined" size={'small'}>
+                                    <Button onClick={() => props.reduce(item)}>
+                                        -
+                                    </Button>
+                                    <Button disabled style={{maxWidth: 40, minWidth: 40}}>
+                                        <Typography variant="body2" color={'textPrimary'}>
+                                            {item.quantity}
+                                        </Typography>
+                                    </Button>
+                                    <Button onClick={() => props.add(item)}>
+                                        +
+                                    </Button>
+                                </ButtonGroup>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant={'body1'}>
+                                    ${item.cost.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography variant={'body1'}>
-                                ${item.cost.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </CardActions>
-            </div>
-        </Card>
+                    </CardActions>
+                </div>
+            </Card>
+        </div>
     );
 
-    const checkout = () => (
+    const summaryDataAndCheckoutButton = () => (
         <div>
             <Grid container className={classes.summaryData} direction={'column'} spacing={1}>
-                <Grid container item direction={'row'} justify={'space-between'} alignItems={'center'}>
-                    <Grid item>
-                        <Typography variant={'subtitle2'} color={'textSecondary'}>
-                            Subtotal:
-                        </Typography>
+                <div className={classes.summaryDataText}>
+                    <Grid container item direction={'row'} justify={'space-between'} alignItems={'center'}>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textSecondary'}>
+                                Subtotal:
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textPrimary'}>
+                                ${shoppingCartSummaryData.subtotal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </Typography>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Typography variant={'subtitle2'} color={'textPrimary'}>
-                            ${shoppingCartSummaryData.subtotal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        </Typography>
+                </div>
+                <div className={classes.summaryDataText}>
+                    <Grid container item direction={'row'} justify={'space-between'} alignItems={'center'}>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textSecondary'}>
+                                Shipping:
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textPrimary'}>
+                                $8.99
+                            </Typography>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container item direction={'row'} justify={'space-between'} alignItems={'center'}>
-                    <Grid item>
-                        <Typography variant={'subtitle2'} color={'textSecondary'}>
-                            Shipping:
-                        </Typography>
+                </div>
+                <div className={classes.summaryDataText}>
+                    <Grid container item direction={'row'} justify={'space-between'} alignItems={'center'}>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textSecondary'}>
+                                Total:
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant={'subtitle2'} color={'textPrimary'}>
+                                ${(shoppingCartSummaryData.subtotal+8.99).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            </Typography>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Typography variant={'subtitle2'} color={'textPrimary'}>
-                            FREE
-                        </Typography>
-                    </Grid>
-                </Grid>
+                </div>
+                <Grid item/>
+                <Grid item/>
                 <Grid item>
                     <Button variant={'contained'} color={'primary'} size={'large'} className={classes.checkout} onClick={() => history.push('/cart')}>
                         Go to checkout
@@ -276,7 +308,7 @@ function ShoppingCart(props) {
                 </AppBar>
                 <Toolbar id="back-to-top-anchor" />
                 {props.items.length === 0 ? empty() :itemsList()}
-                {props.items.length === 0 ? null : checkout()}
+                {props.items.length === 0 ? null : summaryDataAndCheckoutButton()}
             </Drawer>
         </React.Fragment>
     );

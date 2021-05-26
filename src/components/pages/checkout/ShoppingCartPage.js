@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import NavBar from "../../reusable/NavBar";
-import {Button, Container} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -22,6 +22,10 @@ import {
 } from "../../../redux/actions/shoppingCartActions";
 import Divider from "@material-ui/core/Divider";
 import { useHistory } from "react-router";
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import {DASHBOARD_ROUTE, SHIPPING_PAGE} from "../../../routes";
 
 
 /**
@@ -32,17 +36,14 @@ const useStyles = makeStyles(theme => {
         mainTitle: {
             fontFamily: "Montserrat-Black",
         },
-        tableContainer: {
-            marginTop: 50,
-        },
         table: {
-            minWidth: 300,
+            minWidth: 100,
         },
         empty: {
             marginTop: 50,
         },
         shop: {
-            minWidth: 250,
+            width: 250,
         },
         content: {
             width: 500,
@@ -68,7 +69,7 @@ function ShoppingCartPage(props) {
             <div className={classes.empty}>
                 <Grid container direction={'column'} justify="center" alignItems="center" spacing={2}>
                     <Grid item>
-                        <Typography variant={'h6'} color={'textSecondary'}>
+                        <Typography variant={'h5'} color={'textSecondary'}>
                             Your cart is empty
                         </Typography>
                     </Grid>
@@ -92,7 +93,7 @@ function ShoppingCartPage(props) {
 
     const cartTable = () => {
         return (
-            <TableContainer className={classes.tableContainer}>
+            <TableContainer>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -107,26 +108,28 @@ function ShoppingCartPage(props) {
                         {shoppingCartSummaryData.collapsedItems.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell component="th" scope="row">
-                                    <Grid container direction={'row'} justify={'flex-start'} alignItems={'center'} spacing={1}>
-                                        <Grid item>
-                                            <img
-                                                src={"/images/confused-mushroom-4-md.png"}
-                                                style={{
-                                                    width: 60,
-                                                    height: 60,
-                                                    objectFit: 'contain'
-                                                }}
-                                            />
+                                    <Link underline='none' component={RouterLink} to={item.name === "Raw B.C. Mushrooms" ? "/shrooms" : "acid"}>
+                                        <Grid container direction={'row'} justify={'flex-start'} alignItems={'center'} spacing={1}>
+                                            <Grid item>
+                                                <img
+                                                    src={"/images/confused-mushroom-4-md.png"}
+                                                    style={{
+                                                        width: 60,
+                                                        height: 60,
+                                                        objectFit: 'contain'
+                                                    }}
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography variant={'body1'} color={'textPrimary'}>
+                                                    {item.name}
+                                                </Typography>
+                                                <Typography variant={'body2'} color={'textSecondary'}>
+                                                    {item.denomination}
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item>
-                                            <Typography variant={'body1'}>
-                                                {item.name}
-                                            </Typography>
-                                            <Typography variant={'body2'} color={'textSecondary'}>
-                                                {item.denomination}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
+                                    </Link>
                                 </TableCell>
                                 <TableCell align="right">
                                     <Typography variant={'body2'}>
@@ -211,7 +214,7 @@ function ShoppingCartPage(props) {
                                     </Grid>
                                     <Grid item>
                                         <Typography variant={'subtitle2'}>
-                                            FREE
+                                            $8.99
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -227,7 +230,7 @@ function ShoppingCartPage(props) {
                                     </Grid>
                                     <Grid item>
                                         <Typography variant={'subtitle2'}>
-                                            ${shoppingCartSummaryData.subtotal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                            ${(shoppingCartSummaryData.subtotal+8.99).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -235,7 +238,7 @@ function ShoppingCartPage(props) {
                         </Grid>
                     </Grid>
                     <Grid item>
-                        <Button variant={'contained'} color={'primary'} size={'large'} style={{width: 300}}>
+                        <Button variant={'contained'} color={'primary'} size={'large'} style={{width: 300}} onClick={() => history.push(SHIPPING_PAGE)}>
                             Proceed to shipping
                         </Button>
                     </Grid>
@@ -246,17 +249,33 @@ function ShoppingCartPage(props) {
 
     return (
         <div>
-            <NavBar/>
+            <div style={{top: 10, left: 10, position: 'relative'}}>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="textSecondary" href={DASHBOARD_ROUTE}>
+                        Nirvana Home
+                    </Link>
+                    <Typography color="textPrimary">Shopping cart</Typography>
+                    <Typography color="textSecondary">Shipping</Typography>
+                    <Typography color="textSecondary">Review order</Typography>
+                </Breadcrumbs>
+            </div>
             <Grid
                 container
                 direction={'column'}
                 justify={'center'}
                 alignItems={'center'}
-                spacing={10}
+                spacing={4}
+                style={{marginTop: 30, marginBottom: 10}}
             >
+                <Grid item>
+                    <Typography variant={'h5'} align={'center'}>
+                        Review your shopping cart
+                    </Typography>
+                </Grid>
                 <Grid item>
                     {props.items.length === 0 ? empty() : cartTable()}
                 </Grid>
+                <Grid item/>
                 <Grid item>
                     {props.items.length === 0 ? '' : summaryDataAndCheckout()}
                 </Grid>
