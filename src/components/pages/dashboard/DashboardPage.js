@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => {
             fontFamily: "Montserrat-Black",
         },
         content: {
-            marginTop: 75
+            marginTop: 50
         }
     };
 });

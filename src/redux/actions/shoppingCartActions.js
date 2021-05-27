@@ -1,8 +1,14 @@
-export const UPDATE_SHOPPING_CART = "UPDATED_SHOPPING_CART";
+export const UPDATE_SHOPPING_CART = "UPDATE_SHOPPING_CART";
+export const EMPTY_SHOPPING_CART = "EMPTY_SHOPPING_CART";
 
 const updateShoppingCart = (items) => ({
     type: UPDATE_SHOPPING_CART,
     items: items
+})
+
+export const emptyShoppingCart = () => ({
+    type: EMPTY_SHOPPING_CART,
+    items: [],
 })
 
 export const addToShoppingCart = (itemsToAdd) => (dispatch, getState) => {
